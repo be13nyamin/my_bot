@@ -3,6 +3,8 @@
 import asyncio
 import logging
 import sys
+from handlers import router as main_router
+
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
