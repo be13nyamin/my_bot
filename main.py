@@ -1,47 +1,49 @@
-import logging
+import asyncio
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import Message
-import asyncio
+import random
 
-# توکن رباتت رو اینجا بذار (توصیه: از Environment Variables استفاده کن)
-TOKEN = 'YOUR_BOT_TOKEN_HERE'
-
+# توکن رباتت رو اینجا بذار
+TOKEN = "8642906741:AAGc-cXICORZ59kmIfSt3gA42BCDyASpq1Q"
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# --- دیتابیس ساده (بعداً باید به SQL تبدیلش کنی) ---
-users_db = {}  # برای ذخیره اخطارها، وضعیت ادمین و...
+# لیست‌های سرگرمی (بنیامین، این‌ها رو می‌تونی هر چقدر بخوای زیاد کنی)
+JOKES = ["جوک ۱", "جوک ۲", "جوک ۳"]
+CHALLENGES = ["چالش ۱", "چالش ۲", "چالش ۳"]
+FACTS = ["دانستنی ۱", "دانستنی ۲", "دانستنی ۳"]
 
-@dp.message(F.text.lower().contains("سلام"))
-async def welcome_user(message: Message):
-    await message.reply(f"سلام {message.from_user.first_name} عزیز، چطوری؟")
-
-@dp.message(F.text.startswith("بن") & F.reply_to_message)
-async def ban_user(message: Message):
-    # اینجا کد بن کردن با استفاده از bot.ban_chat_member رو اضافه می‌کنی
-    await message.answer("کاربر مورد نظر با موفقیت بن شد!")
-
-# --- بخش مدیریت لینک (ضد لینک) ---
-@dp.message(F.text.contains("http") | F.text.contains("t.me"))
+# سیستم ساده ضد لینک (ساده و سریع)
+@dp.message(F.text.contains("http") | F.text.contains("www") | F.text.contains(".com"))
 async def anti_link(message: Message):
-    # اینجا باید منطق اخطارها رو پیاده کنی
-    await message.reply("عزیز لینک ممنوعه! یک اخطار دریافت کردی.")
+    await message.delete()
+    await message.answer(f"کاربر {message.from_user.first_name}، ارسال لینک ممنوعه!")
 
-# --- راهنما ---
-@dp.message(Command("راهنما"))
+# پاسخ‌های خودکار
+@dp.message(F.text.lower() == "سلام")
+async def hello(message: Message):
+    await message.answer(f"سلام بنیامین‌دوست! چطوری {message.from_user.first_name}؟")
+
+# دستور راهنما
+@dp.message(Command("help"))
 async def help_cmd(message: Message):
-    help_text = """
-    📜 **راهنمای ربات بنیامین:**
-    1. مدیریت: بن، سکوت، رفع سکوت، معاف، پاکسازی
-    2. سرگرمی: جوک، چالش، دانستنی، بیو
-    3. تنظیمات: قفل گروه، باز کردن گروه
-    """
-    await message.answer(help_text)
+    await message.answer("لیست دستورات:\n/joke - یک جوک\n/fact - یک دانستنی\n/challenge - یک چالش")
 
+# دستور سرگرمی
+@dp.message(Command("joke"))
+async def joke_cmd(message: Message):
+    await message.answer(random.choice(JOKES))
+
+@dp.message(Command("fact"))
+async def fact_cmd(message: Message):
+    await message.answer(random.choice(FACTS))
+
+# شروع به کار ربات
 async def main():
+    print("ربات روشن شد...")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-  
+    
