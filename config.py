@@ -1,5 +1,5 @@
 # config.py
-TOKEN = "8622448090:AAEXY0fx0-_noi8LDYAHGyb0evOrV_SXC0g"
+TOKEN = "8642906741:AAGc-cXICORZ59kmIfSt3gA42BCDyASpq1Q"
 AI_API_KEY = ""          # اگر خواستی هوش مصنوعی وصل کنی, کلیدت رو بذار
 
 # آیدی عددی ادمین اصلی (تو)
