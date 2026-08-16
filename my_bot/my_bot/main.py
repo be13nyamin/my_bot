@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.types import ContentType
 
 # وارد کردن ماژول‌هایی که خودمون ساختیم
-from config import 8642906741:AAGc-cXICORZ59kmIfSt3gA42BCDyASpq1Q, OWNER_ID, ADMINS, ANTI_LINK, MAX_WARNINGS
+from config import 8642906741:AAGc-cXICORZ59kmIfSt3gA42BCDyASpq1Q, 8441091476, ADMINS, ANTI_LINK, MAX_WARNINGS
 from db import Database
 from fun import FunModule
 from ai import AIModule
