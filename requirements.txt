@@ -1,0 +1,4 @@
+aiogram
+aiohttp
+aiohttp_socks
+python-dotenv
